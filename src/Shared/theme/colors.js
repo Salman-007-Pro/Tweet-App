@@ -27,4 +27,4 @@ export const FAIL = '#F84F31';
 // heart colors
 export const HEART_COLOR = '#e31b23';
 export const HEART_COLOR2 = '#98002e';
-export const HEART_COLOR2 = '#6f1200';
+export const HEART_COLOR3 = '#6f1200';
