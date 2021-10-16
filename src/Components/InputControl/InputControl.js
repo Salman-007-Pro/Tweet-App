@@ -23,7 +23,7 @@ const InputControl = ({
   };
   return (
     <View style={[styles.wrapper, wrapperStyle]}>
-      <View style={[styles.container, containerStyle]}>
+      <View style={[styles.container, containerStyle, {...(error && styles.onErrorLine)}]}>
         {leftIcon && <View style={styles.iconWrapper}>{leftIcon}</View>}
 
         <Component {...rest} {...(showEye && {secureTextEntry: showPassword})} />
@@ -63,5 +63,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: Metrics.scale(10),
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  onErrorLine: {
+    borderColor: Colors.ERROR,
+    borderWidth: 1,
+    borderBottomWidth: 1,
+    borderRadius: Metrics.verticalScale(10),
   },
 });

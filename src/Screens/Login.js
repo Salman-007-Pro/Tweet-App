@@ -17,8 +17,6 @@ const schema = Yup.object({
     .matches(REGEX_CONSTANT.PASSWORD_PATTERN, ERROR_MESSAGES.INVALID_PASSWORD),
 }).required();
 
-let render = 0;
-
 const login = () => {
   const {control, handleSubmit} = useForm({
     mode: 'all',
@@ -29,7 +27,6 @@ const login = () => {
     console.log(data);
   };
 
-  console.log(render++);
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>

@@ -7,6 +7,7 @@ export const ERROR_MESSAGES = {
   REQUIRED_PASSWORD: 'Password is required',
   INVALID_PASSWORD: 'Invalid Password format',
   INVALID_EMAIL: 'Please enter a valid Email Address.',
+  REQUIRED_POST: 'Post is Required',
 };
 
 export const APP_NAV = {

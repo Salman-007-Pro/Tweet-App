@@ -6,6 +6,7 @@ import {Colors} from '../../Shared/theme';
 const Input = ({
   secureTextEntry = false,
   placeholderTextColor = Colors.GREY_COLOR5,
+  selectionColor = Colors.WHITE,
   inputRef,
   style,
   ...rest
@@ -17,7 +18,7 @@ const Input = ({
       style={[styles.inputStyle, style]}
       secureTextEntry={secureTextEntry}
       caretHidden={false}
-      selectionColor={Colors.WHITE}
+      selectionColor={selectionColor}
       placeholderTextColor={placeholderTextColor}
     />
   );
@@ -30,6 +31,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: Metrics.scale(10),
     ...Fonts.font({size: 18, color: Colors.WHITE}),
-    maxHeight: Metrics.verticalScale(60),
+    height: Metrics.verticalScale(60),
   },
 });
