@@ -3,12 +3,12 @@ import {StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Colors} from '../../Shared/theme';
 
-const ImageLoader = ({source, style, tintColor, ...rest}) => {
+const ImageLoader = ({source, style, tintColor, resizeMode = 'contain', ...rest}) => {
   return (
     <FastImage
       source={source}
       style={[styles.Image, style]}
-      resizeMode="contain"
+      resizeMode={resizeMode}
       resizeMethod="auto"
       renderToHardwareTextureAndroid
       {...(tintColor && {tintColor: tintColor})}

@@ -12,4 +12,5 @@ export const ERROR_MESSAGES = {
 export const APP_NAV = {
   LOGIN: 'login_screen',
   DASHBOARD: 'dashboard_screen',
+  POST: 'post_screen',
 };

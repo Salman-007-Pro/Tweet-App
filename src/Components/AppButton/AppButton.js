@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 
 const AppButton = ({
   style,
+  textStyle,
   name,
   icon = <Icon name="chevron-right" color={Colors.WHITE} size={Metrics.icons.normal} />,
   isLoading,
@@ -19,7 +20,7 @@ const AppButton = ({
       ) : (
         <View style={styles.textContainer}>
           {icon}
-          {name && <Text style={styles.buttonText}>{name}</Text>}
+          {name && <Text style={[styles.buttonText, textStyle]}>{name}</Text>}
         </View>
       )}
     </TouchableOpacity>
