@@ -3,8 +3,8 @@ import {StyleSheet, Text, View} from 'react-native';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 import {QueryClient, QueryClientProvider} from 'react-query';
+import AuthNavigation from './src/Navigation/AuthNavigation';
 import {Colors} from './src/Shared/theme';
-import Login from './src/Screens/Login';
 
 const queryClient = new QueryClient();
 
@@ -15,15 +15,13 @@ const App = () => {
         addPlugin({queryClient});
       });
     }
-    setTimeout(() => {
-      SplashScreen.hide();
-    }, 3000);
+    SplashScreen.hide();
   }, []);
   return (
     <QueryClientProvider client={queryClient}>
       <SafeAreaProvider>
         <SafeAreaView style={styles.safeAreaStyle}>
-          <Login />
+          <AuthNavigation />
         </SafeAreaView>
       </SafeAreaProvider>
     </QueryClientProvider>

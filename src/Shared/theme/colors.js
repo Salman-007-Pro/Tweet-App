@@ -4,6 +4,7 @@ export const APP_PRIMARY = '#1566EE';
 // text
 export const WHITE = '#FFFFFF';
 export const BLACK = '#000000';
+export const ERROR = '#ff3333';
 
 // GRAYSCALE
 export const GRAY_NORMAL = '#808080';
