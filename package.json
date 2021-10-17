@@ -20,6 +20,7 @@
     "react-hook-form": "^7.17.3",
     "react-native": "0.66.0",
     "react-native-fast-image": "^8.5.11",
+    "react-native-modal": "^13.0.0",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.8.0",
     "react-native-snackbar": "^2.4.0",

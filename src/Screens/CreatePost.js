@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import AppButton from '../Components/AppButton/AppButton';
 import {Fonts, Metrics} from '../Shared/metrics';
