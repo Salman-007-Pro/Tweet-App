@@ -16,3 +16,25 @@ export const APP_NAV = {
   POST: 'post_screen',
   PROFILE: 'profile_screen',
 };
+
+export const API_SERVICE = {
+  BASE_URL: '',
+};
+
+export const STORAGE_SERVICE = {
+  TOKEN: 'TOKEN',
+  USER_INFO: 'USER_INFO',
+};
+
+export const CONTENT_TYPE = {
+  JSON: 'application/json',
+  FORM_DATA: 'multipart/form-data',
+};
+
+export const HTTP_STATUS = {
+  UNAUTHORIZED: 401,
+  OK: 200,
+  CREATED: 201,
+  PAYLOAD_TOO_LARGE: 413,
+  SERVER_ERROR: 500,
+};
