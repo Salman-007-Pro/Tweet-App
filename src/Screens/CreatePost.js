@@ -16,7 +16,7 @@ const schema = Yup.object({
   post: Yup.string().required(ERROR_MESSAGES.REQUIRED_POST),
 }).required();
 
-const CreatePost = () => {
+const CreatePost = ({navigation}) => {
   const {control, handleSubmit} = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
@@ -24,6 +24,10 @@ const CreatePost = () => {
   const onSubmitHandle = data => {
     console.log(data);
   };
+  // console.log();
+  // navigation.setOptions({
+  //   tabBarStyle: {display: 'none'},
+  // });
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -32,6 +36,7 @@ const CreatePost = () => {
           icon={false}
           textStyle={styles.cancelText}
           style={styles.cancelButton}
+          onPress={navigation?.goBack}
         />
         <AppButton
           name="Post"

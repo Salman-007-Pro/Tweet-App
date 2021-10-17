@@ -18,7 +18,7 @@ export const APP_NAV = {
 };
 
 export const API_SERVICE = {
-  BASE_URL: '',
+  BASE_URL: 'https://res.cloudinary.com/prohorde/raw/upload',
 };
 
 export const STORAGE_SERVICE = {

@@ -7,6 +7,7 @@ import {Colors} from '../../Shared/theme';
 import ImageLoader from '../ImageLoader/ImageLoader';
 import LogoIcon from '../../assets/images/Teewter_Logo.png';
 import Pic1 from '../../assets/images/pic2.jpg';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 
 const ListMap = route => {
   switch (route) {
@@ -25,9 +26,7 @@ const ListMap = route => {
     case APP_NAV.POST:
       return ({isFocused, onPress}) => (
         <View style={styles.buttonWrapper}>
-          <TouchableOpacity
-            onPress={onPress}
-            {...(isFocused && {style: styles.midButtonContainer})}>
+          <TouchableOpacity onPress={onPress} style={styles.midButtonContainer}>
             <View style={styles.imageContainer}>
               <ImageLoader source={LogoIcon} resizeMode="contain" />
             </View>
@@ -49,29 +48,28 @@ const ListMap = route => {
   }
 };
 
-const CustomizeTabBar = ({state, navigation}) => (
-  <View style={styles.container}>
-    {state.routes.map((route, index) => {
-      const isFocused = state.index === index;
+const CustomizeTabBar = ({state, navigation, ...rest}) =>
+  state.index !== 1 ? (
+    <View style={styles.container}>
+      {state.routes.map((route, index) => {
+        const isFocused = state.index === index;
 
-      const onPress = () => {
-        const event = navigation.emit({
-          type: 'tabPress',
-          target: route.key,
-          canPreventDefault: true,
-        });
+        const onPress = () => {
+          const event = navigation.emit({
+            type: 'tabPress',
+            target: route.key,
+            canPreventDefault: true,
+          });
 
-        if (!isFocused && !event.defaultPrevented) {
-          navigation.navigate({name: route.name, merge: true});
-        }
-      };
-
-      const Component = ListMap(route.name);
-
-      return <Component key={route.key} isFocused={isFocused} onPress={onPress} />;
-    })}
-  </View>
-);
+          if (!isFocused && !event.defaultPrevented) {
+            navigation.navigate({name: route.name, merge: true});
+          }
+        };
+        const Component = ListMap(route.name);
+        return <Component key={route.key} isFocused={isFocused} onPress={onPress} />;
+      })}
+    </View>
+  ) : null;
 
 export default CustomizeTabBar;
 
