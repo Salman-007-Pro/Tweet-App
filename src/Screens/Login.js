@@ -9,6 +9,7 @@ import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import Field from '../Components/Field/Field';
 import AppButton from '../Components/AppButton/AppButton';
+import KeyboardVoidViewHOC from '../Components/KeyboardVoidViewHOC/KeyboardVoidViewHOC';
 
 const schema = Yup.object({
   email: Yup.string().required(ERROR_MESSAGES.REQUIRED_EMAIL).email(ERROR_MESSAGES.INVALID_EMAIL),
@@ -17,7 +18,7 @@ const schema = Yup.object({
     .matches(REGEX_CONSTANT.PASSWORD_PATTERN, ERROR_MESSAGES.INVALID_PASSWORD),
 }).required();
 
-const login = () => {
+const Login = () => {
   const {control, handleSubmit} = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
@@ -46,7 +47,8 @@ const login = () => {
   );
 };
 
-export default login;
+export default KeyboardVoidViewHOC(Login);
+// export default Login;
 
 const styles = StyleSheet.create({
   container: {

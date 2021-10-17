@@ -14,4 +14,5 @@ export const APP_NAV = {
   LOGIN: 'login_screen',
   DASHBOARD: 'dashboard_screen',
   POST: 'post_screen',
+  PROFILE: 'profile_screen',
 };

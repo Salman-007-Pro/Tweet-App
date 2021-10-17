@@ -10,6 +10,7 @@ import Field from '../Components/Field/Field';
 import {ERROR_MESSAGES} from '../Shared/contants/contants';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import KeyboardVoidViewHOC from '../Components/KeyboardVoidViewHOC/KeyboardVoidViewHOC';
 
 const schema = Yup.object({
   post: Yup.string().required(ERROR_MESSAGES.REQUIRED_POST),
@@ -63,7 +64,7 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default KeyboardVoidViewHOC(CreatePost);
 
 const styles = StyleSheet.create({
   container: {
