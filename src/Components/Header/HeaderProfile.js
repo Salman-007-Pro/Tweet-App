@@ -1,17 +1,17 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {Fonts, Metrics} from '../../Shared/metrics';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Metrics} from '../../Shared/metrics';
 import {Colors} from '../../Shared/theme';
 import Icon from 'react-native-vector-icons/Feather';
 import IconEnt from 'react-native-vector-icons/Entypo';
 import ImageLoader from '../ImageLoader/ImageLoader';
 import Pic1 from '../../assets/images/pic1.jpg';
 
-const HeaderProfile = () => {
+const HeaderProfile = ({onBack}) => {
   return (
-    <View style={styles.container}>
+    <>
       <View style={styles.headerTopContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onBack}>
           <Icon name="chevron-left" size={Metrics.icons.normal} color={Colors.WHITE} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.headerFooterContainer}>
@@ -21,19 +21,13 @@ const HeaderProfile = () => {
       <View style={styles.imageContainer}>
         <ImageLoader source={Pic1} resizeMode="cover" />
       </View>
-    </View>
+    </>
   );
 };
 
 export default HeaderProfile;
 
 const styles = StyleSheet.create({
-  container: {
-    // backgroundColor: Colors.APP_PRIMARY,
-    // padding: Metrics.baseMargin,
-    // borderColor: 'red',
-    // borderWidth: 1,
-  },
   headerTopContainer: {
     height: Metrics.verticalScale(130),
     justifyContent: 'space-between',

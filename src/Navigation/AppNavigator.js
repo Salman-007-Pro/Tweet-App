@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Dashboard from '../Screens/Dashboard';
@@ -7,28 +7,51 @@ import CreatePost from '../Screens/CreatePost';
 import Profile from '../Screens/Profile';
 import CustomizeTabBar from '../Components/CustomizeTabBar/CustomizeTabBar';
 import {APP_NAV} from '../Shared/contants/contants';
-import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
+import {Colors} from '../Shared/theme';
 
-const Stack = createNativeStackNavigator();
+const RootStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const CreatePostStack = () => (
-  <Stack.Navigator screenOptions={{headerShown: false, presentation: 'modal'}}>
-    <Stack.Screen name="MyModal" component={CreatePost} />
-  </Stack.Navigator>
+const CreatePlaceholder = () => <View style={{flex: 1, backgroundColor: Colors.APP_PRIMARY}} />;
+
+const AppTabScreen = () => (
+  <Tab.Navigator
+    tabBar={CustomizeTabBar}
+    detachInactiveScreens
+    screenOptions={{
+      headerShown: false,
+    }}>
+    <Tab.Screen name={APP_NAV.DASHBOARD} component={Dashboard} />
+    <Tab.Screen
+      name={APP_NAV.POST}
+      component={CreatePlaceholder}
+      listeners={({navigation}) => ({
+        tabPress: e => {
+          e.preventDefault();
+          navigation.navigate(APP_NAV.CREATE_MODAL);
+        },
+      })}
+    />
+    <Tab.Screen name={APP_NAV.PROFILE} component={Profile} />
+  </Tab.Navigator>
 );
 const AppNavigator = () => {
   return (
-    <Tab.Navigator
-      tabBar={CustomizeTabBar}
-      detachInactiveScreens
+    <RootStack.Navigator
       screenOptions={{
         headerShown: false,
-      }}>
-      <Tab.Screen name={APP_NAV.DASHBOARD} component={Dashboard} />
-      <Tab.Screen name={APP_NAV.POST} component={CreatePostStack} />
-      <Tab.Screen name={APP_NAV.PROFILE} component={Profile} />
-    </Tab.Navigator>
+      }}
+      initialRouteName={APP_NAV.APP_TAB}>
+      <RootStack.Group>
+        <RootStack.Screen name={APP_NAV.APP_TAB} component={AppTabScreen} />
+      </RootStack.Group>
+      <RootStack.Group
+        screenOptions={{
+          presentation: 'fullScreenModal',
+        }}>
+        <RootStack.Screen name={APP_NAV.CREATE_MODAL} component={CreatePost} />
+      </RootStack.Group>
+    </RootStack.Navigator>
   );
 };
 

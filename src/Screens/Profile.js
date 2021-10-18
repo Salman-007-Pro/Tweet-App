@@ -65,10 +65,10 @@ const Posts = [
   },
 ];
 
-const Profile = () => {
+const Profile = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <HeaderProfile />
+      <HeaderProfile onBack={navigation.goBack} />
       <ScrollView contentContainerStyle={styles.scrollWrapper} showsVerticalScrollIndicator={false}>
         <View style={styles.introductionContainer}>
           <View style={styles.headingContainer}>

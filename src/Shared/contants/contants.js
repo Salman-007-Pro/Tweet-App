@@ -15,6 +15,8 @@ export const APP_NAV = {
   DASHBOARD: 'dashboard_screen',
   POST: 'post_screen',
   PROFILE: 'profile_screen',
+  CREATE_MODAL: 'create_modal',
+  APP_TAB: 'app_tab',
 };
 
 export const API_SERVICE = {

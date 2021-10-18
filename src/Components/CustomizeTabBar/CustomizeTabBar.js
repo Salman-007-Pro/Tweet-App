@@ -48,28 +48,27 @@ const ListMap = route => {
   }
 };
 
-const CustomizeTabBar = ({state, navigation, ...rest}) =>
-  state.index !== 1 ? (
-    <View style={styles.container}>
-      {state.routes.map((route, index) => {
-        const isFocused = state.index === index;
+const CustomizeTabBar = ({state, navigation}) => (
+  <View style={styles.container}>
+    {state.routes.map((route, index) => {
+      const isFocused = state.index === index;
 
-        const onPress = () => {
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-            canPreventDefault: true,
-          });
+      const onPress = () => {
+        const event = navigation.emit({
+          type: 'tabPress',
+          target: route.key,
+          canPreventDefault: true,
+        });
 
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate({name: route.name, merge: true});
-          }
-        };
-        const Component = ListMap(route.name);
-        return <Component key={route.key} isFocused={isFocused} onPress={onPress} />;
-      })}
-    </View>
-  ) : null;
+        if (!isFocused && !event.defaultPrevented) {
+          navigation.navigate({name: route.name, merge: true});
+        }
+      };
+      const Component = ListMap(route.name);
+      return <Component key={route.key} isFocused={isFocused} onPress={onPress} />;
+    })}
+  </View>
+);
 
 export default CustomizeTabBar;
 
