@@ -13,7 +13,9 @@ import * as Yup from 'yup';
 import KeyboardVoidViewHOC from '../Components/KeyboardVoidViewHOC/KeyboardVoidViewHOC';
 
 const schema = Yup.object({
-  post: Yup.string().required(ERROR_MESSAGES.REQUIRED_POST),
+  post: Yup.string()
+    .required(ERROR_MESSAGES.REQUIRED_POST)
+    .max(240, 'A post is limited to 240 characters'),
 }).required();
 
 const CreatePost = ({navigation}) => {
@@ -57,7 +59,6 @@ const CreatePost = ({navigation}) => {
             placeholder="What's Happening?"
             containerStyle={styles.bodyTextContainerStyle}
             style={styles.bodyText}
-            maxLength={250}
             multiline
             numberOfLines={10}
             selectionColor={Colors.GRAY_NORMAL}

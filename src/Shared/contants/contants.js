@@ -26,6 +26,7 @@ export const API_SERVICE = {
 export const STORAGE_SERVICE = {
   TOKEN: 'TOKEN',
   USER_INFO: 'USER_INFO',
+  FEED: 'FEED',
 };
 
 export const CONTENT_TYPE = {
