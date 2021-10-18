@@ -1,5 +1,4 @@
-import get from 'lodash.get';
-import lodashIsEmpty from 'lodash.isempty';
+import _ from 'lodash';
 
 export const utilService = {
   getValue,
@@ -10,11 +9,11 @@ export const utilService = {
 };
 
 function getValue(...param) {
-  return get(...param);
+  return _.get(...param);
 }
 
 function isEmpty(value) {
-  return lodashIsEmpty(value);
+  return _.isEmpty(value);
 }
 
 function createDynamicUrl(dynamicUrl, object) {

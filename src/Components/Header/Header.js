@@ -9,7 +9,7 @@ import ImageLoader from '../ImageLoader/ImageLoader';
 const Header = () => {
   return (
     <View style={styles.container}>
-      <ImageLoader source={LogoIcon} tintColor={Colors.APP_PRIMARY} />
+      <ImageLoader source={LogoIcon} tintColor={Colors.APP_PRIMARY} resizeMode="contain" />
     </View>
   );
 };
@@ -22,5 +22,6 @@ const styles = StyleSheet.create({
     height: Metrics.verticalScale(70),
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: Colors.WHITE,
   },
 });

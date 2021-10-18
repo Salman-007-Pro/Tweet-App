@@ -7,18 +7,18 @@ import {Colors} from '../../Shared/theme';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconOct from 'react-native-vector-icons/Octicons';
 
-const PostCard = ({name, email, description, style, image = Pic1, likes}) => {
+const PostCard = ({name, email, post, style, image = Pic1, likes}) => {
   return (
     <View style={[styles.container, style]}>
       <View style={styles.cardImageWrapper}>
-        <ImageLoader source={image} resizeMode="cover" />
+        <ImageLoader source={{uri: image}} resizeMode="cover" style={styles.imageStyle} />
       </View>
       <View style={styles.cardBodyContainer}>
         <Text style={styles.cardHeadingText}>
           {name}
           <Text style={styles.cardHeadingTextEmail}> {email}</Text>
         </Text>
-        <Text style={styles.cardBodyText}>{description}</Text>
+        <Text style={styles.cardBodyText}>{post}</Text>
         <View style={styles.cardBodyBottomContainer}>
           <TouchableOpacity style={styles.cardHeartContainer}>
             <Icon name="heart" color={Colors.HEART_COLOR} size={Metrics.icons.normal} />
@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderColor: Colors.GREY_COLOR2,
     borderBottomWidth: 1,
-    marginBottom: Metrics.verticalScale(30),
   },
   cardImageWrapper: {
     width: Metrics.scale(55),
@@ -72,5 +71,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: '45%',
+  },
+  imageStyle: {
+    backgroundColor: Colors.APP_PRIMARY,
   },
 });

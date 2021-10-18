@@ -6,8 +6,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 import {Colors} from '../../Shared/theme';
 import ImageLoader from '../ImageLoader/ImageLoader';
 import LogoIcon from '../../assets/images/Teewter_Logo.png';
-import Pic1 from '../../assets/images/pic2.jpg';
-import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
+import userInfoContainer from '../../Containers/userInfoContainer';
 
 const ListMap = route => {
   switch (route) {
@@ -34,17 +33,27 @@ const ListMap = route => {
         </View>
       );
     default:
-      return ({isFocused, onPress}) => (
-        <View style={[styles.buttonWrapper, {alignItems: 'flex-end'}]}>
-          <TouchableOpacity
-            onPress={onPress}
-            style={[styles.profileWrapper, {...(isFocused && {borderColor: Colors.APP_PRIMARY})}]}>
-            <View style={styles.profileContainer}>
-              <ImageLoader source={Pic1} resizeMode="cover" />
-            </View>
-          </TouchableOpacity>
-        </View>
-      );
+      return ({isFocused, onPress}) => {
+        const {data} = userInfoContainer();
+        return (
+          <View style={[styles.buttonWrapper, {alignItems: 'flex-end'}]}>
+            <TouchableOpacity
+              onPress={onPress}
+              style={[
+                styles.profileWrapper,
+                {...(isFocused && {borderColor: Colors.APP_PRIMARY})},
+              ]}>
+              <View style={styles.profileContainer}>
+                <ImageLoader
+                  source={{uri: data?.currentUser?.profile_picture}}
+                  resizeMode="cover"
+                  style={{backgroundColor: Colors.APP_PRIMARY}}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+        );
+      };
   }
 };
 

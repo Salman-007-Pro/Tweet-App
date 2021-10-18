@@ -4,28 +4,40 @@ import {Fonts, Metrics} from '../Shared/metrics';
 import {Colors} from '../Shared/theme';
 import LogoIcon from '../assets/images/Teewter_Logo.png';
 import * as Yup from 'yup';
-import {ERROR_MESSAGES, REGEX_CONSTANT} from '../Shared/contants/contants';
+import {ERROR_MESSAGES, REGEX_CONSTANT, STORAGE_SERVICE} from '../Shared/contants/contants';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import Field from '../Components/Field/Field';
 import AppButton from '../Components/AppButton/AppButton';
 import KeyboardVoidViewHOC from '../Components/KeyboardVoidViewHOC/KeyboardVoidViewHOC';
+import loginContainer from '../Containers/loginContainer';
+import {reactStorageService} from '../Shared/services/storage.service';
+import {useQueryClient} from 'react-query';
 
 const schema = Yup.object({
-  email: Yup.string().required(ERROR_MESSAGES.REQUIRED_EMAIL).email(ERROR_MESSAGES.INVALID_EMAIL),
+  id: Yup.string().required(ERROR_MESSAGES.REQUIRED_USER_ID).max(4, ERROR_MESSAGES.INVALID_ID),
   password: Yup.string()
     .required(ERROR_MESSAGES.REQUIRED_PASSWORD)
     .matches(REGEX_CONSTANT.PASSWORD_PATTERN, ERROR_MESSAGES.INVALID_PASSWORD),
 }).required();
 
 const Login = () => {
-  const {control, handleSubmit} = useForm({
+  const client = useQueryClient();
+  const {control, handleSubmit, reset} = useForm({
     mode: 'all',
     resolver: yupResolver(schema),
   });
 
-  const onSubmitHandle = data => {
-    console.log(data);
+  const {isLoading, mutate} = loginContainer();
+
+  const onSubmitHandle = payload => {
+    mutate(payload, {
+      onSuccess: async data => {
+        await reactStorageService.set(STORAGE_SERVICE.TOKEN, JSON.stringify(data));
+        client.refetchQueries(STORAGE_SERVICE.TOKEN);
+        reset();
+      },
+    });
   };
 
   return (
@@ -38,10 +50,14 @@ const Login = () => {
           <Text style={styles.heading}>Log In</Text>
         </View>
         <View style={styles.formContainer}>
-          <Field control={control} name="email" placeholder="Email" />
+          <Field control={control} name="id" placeholder="User Id" />
           <Field control={control} name="password" placeholder="Password" showEye />
         </View>
-        <AppButton onPress={handleSubmit(onSubmitHandle)} />
+        <AppButton
+          onPress={handleSubmit(onSubmitHandle)}
+          isLoading={isLoading}
+          disabled={isLoading}
+        />
       </ScrollView>
     </View>
   );

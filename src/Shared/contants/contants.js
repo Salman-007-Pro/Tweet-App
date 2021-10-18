@@ -1,12 +1,14 @@
 export const REGEX_CONSTANT = {
-  PASSWORD_PATTERN: /^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9]).{8,}$/,
+  PASSWORD_PATTERN: /^([0-9]|[a-z]).{4}/g,
 };
 
 export const ERROR_MESSAGES = {
   REQUIRED_EMAIL: 'Email is Required',
+  REQUIRED_USER_ID: 'User Id is Required',
   REQUIRED_PASSWORD: 'Password is required',
   INVALID_PASSWORD: 'Invalid Password format',
   INVALID_EMAIL: 'Please enter a valid Email Address.',
+  INVALID_ID: 'Maximum 4 Digit',
   REQUIRED_POST: 'Post is Required',
 };
 

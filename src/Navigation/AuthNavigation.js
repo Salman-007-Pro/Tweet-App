@@ -7,6 +7,8 @@ import {Colors} from '../Shared/theme';
 import {navigationRef} from '../Shared/services/navigation.service';
 import AppNavigator from './AppNavigator';
 import Login from '../Screens/Login';
+import tokenContainer from '../Containers/tokenContainer';
+import FullLoader from '../Components/FullLoader/FullLoader';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,7 +21,11 @@ const MyTheme = {
 };
 
 const AuthNavigation = () => {
-  const token = 'as';
+  const {data: {id: token} = {}, isLoading} = tokenContainer();
+
+  if (isLoading) {
+    return <FullLoader />;
+  }
   return (
     <NavigationContainer theme={MyTheme} ref={navigationRef}>
       {!token ? (

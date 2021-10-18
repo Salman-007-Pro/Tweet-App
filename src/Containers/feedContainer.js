@@ -23,6 +23,7 @@ const feedContainer = (
     {
       select: useCallback(select, []),
       notifyOnChangeProps: notifyProps,
+      staleTime: Infinity,
     },
   );
   return {data, isLoading};

@@ -1,31 +1,33 @@
 import {useCallback} from 'react';
 import {useQuery} from 'react-query';
 import {STORAGE_SERVICE} from '../Shared/contants/contants';
-import {snackbarService} from '../Shared/services/snackbar.service';
 import {reactStorageService} from '../Shared/services/storage.service';
 
 const tokenContainer = (
   notifyProps = ['data', 'isLoading'],
   select = data => data,
   queryKey = STORAGE_SERVICE.TOKEN,
+  retry = 0,
 ) => {
   const {data, isLoading} = useQuery(
     queryKey,
     async () => {
-      const userInfo = await reactStorageService.get(STORAGE_SERVICE.USER_INFO);
+      const userInfo = await reactStorageService.get(STORAGE_SERVICE.TOKEN);
       if (userInfo) {
-        return userInfo;
+        return JSON.parse(userInfo);
       } else {
-        snackbarService.fail('Something went wrong');
-        throw new Error('Something went wrong');
+        return {
+          id: null,
+        };
       }
     },
     {
       select: useCallback(select, []),
       notifyOnChangeProps: notifyProps,
+      retry: retry,
     },
   );
-  return {data, isLoading};
+  return {data: data, isLoading};
 };
 
 export default tokenContainer;
