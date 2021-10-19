@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   noFeedText: {
-    ...Fonts.font({size: 24, type: Fonts.Type.Bold}),
+    ...Fonts.font({size: 20, type: Fonts.Type.Bold}),
     opacity: 0.5,
   },
 });

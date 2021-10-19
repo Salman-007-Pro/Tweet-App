@@ -5,9 +5,10 @@ import {Fonts, Metrics} from '../../Shared/metrics';
 import {Colors} from '../../Shared/theme';
 import Icon from 'react-native-vector-icons/AntDesign';
 import IconFont from 'react-native-vector-icons/Fontisto';
+import OpenURLButton from '../OpenUrlButton/OpenUrlButton';
 
-const SocialModal = forwardRef(({}, ref) => {
-  const [visible, setVisible] = useState(true);
+const SocialModal = forwardRef(({story, socialLink}, ref) => {
+  const [visible, setVisible] = useState(false);
 
   const closeModal = () => {
     setVisible(false);
@@ -41,31 +42,20 @@ const SocialModal = forwardRef(({}, ref) => {
         </TouchableOpacity>
 
         <View style={styles.bodyContainer}>
-          <Text style={styles.bodyText}>
-            Mark Samson is a Human Resources specialist with a decade of successful experience in
-            hiring and employee management.{'\n'}
-          </Text>
-          <Text style={styles.bodyText}>
-            Mark specializes in Human Resource technologies and regularly attends national training
-            sessions to showcase new HR tech trends, such as self-service, wellness apps, and people
-            analytics tools.{'\n'}
-          </Text>
-          <Text style={styles.bodyText}>
-            A strong believer in the power of positive thinking in the workplace,
-          </Text>
+          <Text style={styles.bodyText}>{story}</Text>
         </View>
 
         <View style={styles.footerWrapper}>
           <View style={styles.footerContainer}>
-            <TouchableOpacity style={styles.footerIconStyle}>
+            <OpenURLButton style={styles.footerIconStyle} url={socialLink.website}>
               <IconFont name="world-o" size={Metrics.icons.small} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.footerIconStyle}>
+            </OpenURLButton>
+            <OpenURLButton style={styles.footerIconStyle} url={socialLink.twitter}>
               <Icon name="twitter" size={Metrics.icons.small} />
-            </TouchableOpacity>
-            <TouchableOpacity>
+            </OpenURLButton>
+            <OpenURLButton url={socialLink.instagram}>
               <Icon name="instagram" size={Metrics.icons.small} />
-            </TouchableOpacity>
+            </OpenURLButton>
           </View>
         </View>
       </View>

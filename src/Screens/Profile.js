@@ -1,12 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
 import HeaderProfile from '../Components/Header/HeaderProfile';
 import {Metrics, Fonts} from '../Shared/metrics';
 import {Colors} from '../Shared/theme';
 import IconEnt from 'react-native-vector-icons/Entypo';
 import PostCard from '../Components/PostCard/PostCard';
 import feedContainer from '../Containers/feedContainer';
-import userInfoContainer from '../Containers/userInfoContainer';
+import {STORAGE_SERVICE} from '../Shared/contants/contants';
+import {useQueryClient} from 'react-query';
 
 const Posts = [
   {
@@ -68,42 +69,71 @@ const Posts = [
 ];
 
 const Profile = ({navigation}) => {
-  // const {data: feedProvider, isLoading: feedLoader} = feedContainer();
-  // const {data: userProvider, isLoading: userLoader} = userInfoContainer();
+  const client = useQueryClient();
+  const {
+    first_name,
+    last_name,
+    followers,
+    following,
+    location,
+    short_bio,
+    username: email,
+    profile_picture,
+    id,
+    ...rest
+  } = client.getQueryData(STORAGE_SERVICE.TOKEN);
+  const {data: feedProvider} = feedContainer();
+  const currentUserFeeds = feedProvider?.feeds?.filter(el => el.user_id == id);
   return (
     <View style={styles.container}>
-      <HeaderProfile onBack={navigation.goBack} />
-      <ScrollView contentContainerStyle={styles.scrollWrapper} showsVerticalScrollIndicator={false}>
-        <View style={styles.introductionContainer}>
-          <View style={styles.headingContainer}>
-            <Text style={styles.headingText}>Mark Samson</Text>
-            <Text style={styles.headingCaption}>@MarkSam</Text>
+      <HeaderProfile onBack={navigation.goBack} image={profile_picture} {...rest} />
+      <FlatList
+        data={currentUserFeeds}
+        keyExtractor={(_, index) => index}
+        initialNumToRender={10}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollWrapper}
+        ItemSeparatorComponent={() => <View style={styles.itemSeparatorStyle} />}
+        ListHeaderComponent={() => (
+          <View style={styles.introductionContainer}>
+            <View style={styles.headingContainer}>
+              <Text style={styles.headingText}>{`${first_name} ${last_name}`}</Text>
+              <Text style={styles.headingCaption}>{email}</Text>
+            </View>
+            <Text style={styles.introductionText}>{short_bio}</Text>
+            <View style={styles.locationContainer}>
+              <IconEnt name="location-pin" size={Metrics.icons.tiny} color={Colors.GRAY_NORMAL} />
+              <Text>{location}</Text>
+            </View>
+            <View style={styles.followingContainer}>
+              <Text style={[styles.followingText, {marginRight: Metrics.baseMargin}]}>
+                {following} <Text style={styles.headingCaption}>Following</Text>
+              </Text>
+              <Text style={styles.followingText}>
+                {followers} <Text style={styles.headingCaption}>Followers</Text>
+              </Text>
+            </View>
           </View>
-          <Text style={styles.introductionText}>
-            This is the best place to see what's happening in your world. Find some people and
-            topcis to follow now.
-          </Text>
-          <View style={styles.locationContainer}>
-            <IconEnt name="location-pin" size={Metrics.icons.tiny} color={Colors.GRAY_NORMAL} />
-            <Text>London</Text>
+        )}
+        ListEmptyComponent={() => (
+          <View style={styles.noFeedContainer}>
+            <Text style={styles.noFeedText}>No Feeds</Text>
           </View>
-          <View style={styles.followingContainer}>
-            <Text style={[styles.followingText, {marginRight: Metrics.baseMargin}]}>
-              578 <Text style={styles.headingCaption}>Following</Text>
-            </Text>
-            <Text style={styles.followingText}>
-              230 <Text style={styles.headingCaption}>Followers</Text>
-            </Text>
-          </View>
-        </View>
-        {/* {Posts.map((el, index, {length}) => (
-          <PostCard
-            key={index}
-            {...el}
-            {...(index === length - 1 && {style: {borderBottomWidth: 0, marginBottom: 0}})}
-          />
-        ))} */}
-      </ScrollView>
+        )}
+        renderItem={({item, index}) => {
+          return (
+            <PostCard
+              name={`${first_name} ${last_name}`}
+              email={email}
+              image={profile_picture}
+              {...item}
+              {...(!currentUserFeeds[index + 1] && {
+                style: {borderBottomWidth: 0, marginBottom: 0},
+              })}
+            />
+          );
+        }}
+      />
     </View>
   );
 };
@@ -151,5 +181,13 @@ const styles = StyleSheet.create({
   scrollWrapper: {
     padding: Metrics.baseMargin,
     paddingTop: 0,
+  },
+  noFeedContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noFeedText: {
+    ...Fonts.font({size: 20, type: Fonts.Type.Bold}),
+    opacity: 0.5,
   },
 });

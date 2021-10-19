@@ -5,15 +5,15 @@ import {Colors} from '../../Shared/theme';
 import Icon from 'react-native-vector-icons/Feather';
 import IconEnt from 'react-native-vector-icons/Entypo';
 import ImageLoader from '../ImageLoader/ImageLoader';
-import Pic1 from '../../assets/images/pic1.jpg';
 import SocialModal from '../Modal/SocialModal';
 
-const HeaderProfile = ({onBack, image}) => {
+const HeaderProfile = ({onBack, image, long_bio, twitter_handle, instagram, website_url}) => {
   const modalRef = useRef(null);
 
   const openModal = () => {
     modalRef.current.openModal();
   };
+  console.log('asd');
   return (
     <>
       <View style={styles.headerTopContainer}>
@@ -25,9 +25,17 @@ const HeaderProfile = ({onBack, image}) => {
         </TouchableOpacity>
       </View>
       <View style={styles.imageContainer}>
-        <ImageLoader source={Pic1} resizeMode="cover" />
+        <ImageLoader source={{uri: image}} resizeMode="cover" />
       </View>
-      <SocialModal ref={modalRef} />
+      <SocialModal
+        ref={modalRef}
+        story={long_bio}
+        socialLink={{
+          twitter: `https://twitter.com/${twitter_handle.replace('@', '')}`,
+          instagram: `https://www.instagram.com/${instagram}`,
+          website: website_url,
+        }}
+      />
     </>
   );
 };
