@@ -14,27 +14,29 @@ const Tab = createBottomTabNavigator();
 
 const CreatePlaceholder = () => <View style={{flex: 1, backgroundColor: Colors.APP_PRIMARY}} />;
 
-const AppTabScreen = () => (
-  <Tab.Navigator
-    tabBar={CustomizeTabBar}
-    detachInactiveScreens
-    screenOptions={{
-      headerShown: false,
-    }}>
-    <Tab.Screen name={APP_NAV.DASHBOARD} component={Dashboard} />
-    <Tab.Screen
-      name={APP_NAV.POST}
-      component={CreatePlaceholder}
-      listeners={({navigation}) => ({
-        tabPress: e => {
-          e.preventDefault();
-          navigation.navigate(APP_NAV.CREATE_MODAL);
-        },
-      })}
-    />
-    <Tab.Screen name={APP_NAV.PROFILE} component={Profile} />
-  </Tab.Navigator>
-);
+const AppTabScreen = () => {
+  return (
+    <Tab.Navigator
+      tabBar={CustomizeTabBar}
+      detachInactiveScreens
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Tab.Screen name={APP_NAV.DASHBOARD} component={Dashboard} />
+      <Tab.Screen
+        name={APP_NAV.POST}
+        component={CreatePlaceholder}
+        listeners={({navigation}) => ({
+          tabPress: e => {
+            e.preventDefault();
+            navigation.navigate(APP_NAV.CREATE_MODAL);
+          },
+        })}
+      />
+      <Tab.Screen name={APP_NAV.PROFILE} component={Profile} />
+    </Tab.Navigator>
+  );
+};
 const AppNavigator = () => {
   return (
     <RootStack.Navigator

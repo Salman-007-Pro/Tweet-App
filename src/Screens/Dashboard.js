@@ -29,8 +29,7 @@ const Dashboard = () => {
             </View>
           )}
           renderItem={({item, index}) => {
-            const {first_name, last_name, profile_picture, username} =
-              userProvider?.allUsers[item.user_id];
+            const {first_name, last_name, profile_picture, username} = userProvider?.[item.user_id];
             return (
               <PostCard
                 name={`${first_name} ${last_name}`}

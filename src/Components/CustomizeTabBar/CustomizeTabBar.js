@@ -1,12 +1,12 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import {APP_NAV} from '../../Shared/contants/contants';
+import {APP_NAV, STORAGE_SERVICE} from '../../Shared/contants/contants';
 import {Metrics} from '../../Shared/metrics';
 import Icon from 'react-native-vector-icons/Entypo';
 import {Colors} from '../../Shared/theme';
 import ImageLoader from '../ImageLoader/ImageLoader';
 import LogoIcon from '../../assets/images/Teewter_Logo.png';
-import userInfoContainer from '../../Containers/userInfoContainer';
+import {useQueryClient} from 'react-query';
 
 const ListMap = route => {
   switch (route) {
@@ -34,7 +34,9 @@ const ListMap = route => {
       );
     default:
       return ({isFocused, onPress}) => {
-        const {data} = userInfoContainer();
+        const client = useQueryClient();
+        const currentUser = client.getQueryData(STORAGE_SERVICE.TOKEN);
+
         return (
           <View style={[styles.buttonWrapper, {alignItems: 'flex-end'}]}>
             <TouchableOpacity
@@ -45,7 +47,7 @@ const ListMap = route => {
               ]}>
               <View style={styles.profileContainer}>
                 <ImageLoader
-                  source={{uri: data?.currentUser?.profile_picture}}
+                  source={{uri: currentUser?.profile_picture}}
                   resizeMode="cover"
                   style={{backgroundColor: Colors.APP_PRIMARY}}
                 />
@@ -57,27 +59,29 @@ const ListMap = route => {
   }
 };
 
-const CustomizeTabBar = ({state, navigation}) => (
-  <View style={styles.container}>
-    {state.routes.map((route, index) => {
-      const isFocused = state.index === index;
+const CustomizeTabBar = ({state, navigation}, image) => {
+  return (
+    <View style={styles.container}>
+      {state.routes.map((route, index) => {
+        const isFocused = state.index === index;
 
-      const onPress = () => {
-        const event = navigation.emit({
-          type: 'tabPress',
-          target: route.key,
-          canPreventDefault: true,
-        });
+        const onPress = () => {
+          const event = navigation.emit({
+            type: 'tabPress',
+            target: route.key,
+            canPreventDefault: true,
+          });
 
-        if (!isFocused && !event.defaultPrevented) {
-          navigation.navigate({name: route.name, merge: true});
-        }
-      };
-      const Component = ListMap(route.name);
-      return <Component key={route.key} isFocused={isFocused} onPress={onPress} />;
-    })}
-  </View>
-);
+          if (!isFocused && !event.defaultPrevented) {
+            navigation.navigate({name: route.name, merge: true});
+          }
+        };
+        const Component = ListMap(route.name);
+        return <Component key={route.key} isFocused={isFocused} onPress={onPress} />;
+      })}
+    </View>
+  );
+};
 
 export default CustomizeTabBar;
 

@@ -5,6 +5,8 @@ import {Metrics, Fonts} from '../Shared/metrics';
 import {Colors} from '../Shared/theme';
 import IconEnt from 'react-native-vector-icons/Entypo';
 import PostCard from '../Components/PostCard/PostCard';
+import feedContainer from '../Containers/feedContainer';
+import userInfoContainer from '../Containers/userInfoContainer';
 
 const Posts = [
   {
@@ -66,6 +68,8 @@ const Posts = [
 ];
 
 const Profile = ({navigation}) => {
+  // const {data: feedProvider, isLoading: feedLoader} = feedContainer();
+  // const {data: userProvider, isLoading: userLoader} = userInfoContainer();
   return (
     <View style={styles.container}>
       <HeaderProfile onBack={navigation.goBack} />
@@ -92,13 +96,13 @@ const Profile = ({navigation}) => {
             </Text>
           </View>
         </View>
-        {Posts.map((el, index, {length}) => (
+        {/* {Posts.map((el, index, {length}) => (
           <PostCard
             key={index}
             {...el}
             {...(index === length - 1 && {style: {borderBottomWidth: 0, marginBottom: 0}})}
           />
-        ))}
+        ))} */}
       </ScrollView>
     </View>
   );
