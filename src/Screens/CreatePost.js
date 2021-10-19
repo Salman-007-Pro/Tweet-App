@@ -7,10 +7,11 @@ import ImageLoader from '../Components/ImageLoader/ImageLoader';
 import Pic1 from '../assets/images/pic2.jpg';
 import {useForm} from 'react-hook-form';
 import Field from '../Components/Field/Field';
-import {ERROR_MESSAGES} from '../Shared/contants/contants';
+import {ERROR_MESSAGES, STORAGE_SERVICE} from '../Shared/contants/contants';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import KeyboardVoidViewHOC from '../Components/KeyboardVoidViewHOC/KeyboardVoidViewHOC';
+import {useQueryClient} from 'react-query';
 
 const schema = Yup.object({
   post: Yup.string()
@@ -26,10 +27,11 @@ const CreatePost = ({navigation}) => {
   const onSubmitHandle = data => {
     console.log(data);
   };
-  // console.log();
-  // navigation.setOptions({
-  //   tabBarStyle: {display: 'none'},
-  // });
+
+  const client = useQueryClient();
+  const currentUser = client.getQueryData(STORAGE_SERVICE.TOKEN);
+  console.log(currentUser);
+
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -50,7 +52,7 @@ const CreatePost = ({navigation}) => {
       </View>
       <View style={styles.bodyContainer}>
         <View style={styles.bodyImageContainer}>
-          <ImageLoader source={Pic1} resizeMode="cover" />
+          <ImageLoader source={{uri: currentUser.profile_picture}} resizeMode="cover" />
         </View>
         <View style={styles.bodyTextContainer}>
           <Field

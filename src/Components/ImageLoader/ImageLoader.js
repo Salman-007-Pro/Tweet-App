@@ -21,7 +21,9 @@ const ImageLoader = ({
   return (
     <View style={[styles.imageContainer, containerStyle]}>
       <FastImage
-        source={source}
+        source={
+          typeof source === 'object' ? {...source, headers: {Authorization: '##123$'}} : source
+        }
         style={[styles.Image, style]}
         resizeMode={resizeMode}
         resizeMethod="auto"

@@ -15,9 +15,10 @@ const tokenContainer = (
     queryKey,
     async () => {
       const userJson = await reactStorageService.get(STORAGE_SERVICE.TOKEN);
-      const {user_id} = JSON.parse(userJson);
+      const userInfo = JSON.parse(userJson);
+      if (!userInfo) return {id: null};
       const {ok, data, response} = await userService.user();
-      const currentUser = data?.users?.find(el => el.id === user_id);
+      const currentUser = data?.users?.find(el => el.id === userInfo.user_id);
       if (userJson && ok) {
         return currentUser;
       } else {
