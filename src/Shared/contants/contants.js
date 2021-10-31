@@ -1,5 +1,6 @@
 export const REGEX_CONSTANT = {
   PASSWORD_PATTERN: /^([0-9]|[a-z]).{4}/g,
+  EMAIL_PATTERN: /^(@\w+)$/g,
 };
 
 export const ERROR_MESSAGES = {
@@ -7,7 +8,7 @@ export const ERROR_MESSAGES = {
   REQUIRED_USER_ID: 'User Id is Required',
   REQUIRED_PASSWORD: 'Password is required',
   INVALID_PASSWORD: 'Invalid Password format',
-  INVALID_EMAIL: 'Please enter a valid Email Address.',
+  INVALID_EMAIL: 'Please enter a valid Email Address like @Mikes',
   INVALID_ID: 'Maximum 4 Digit',
   REQUIRED_POST: 'Post is Required',
 };
@@ -19,6 +20,7 @@ export const APP_NAV = {
   PROFILE: 'profile_screen',
   CREATE_MODAL: 'create_modal',
   APP_TAB: 'app_tab',
+  USER_PROFILE: 'userProfile_screen',
 };
 
 export const API_SERVICE = {

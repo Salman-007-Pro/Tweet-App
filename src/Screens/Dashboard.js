@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {StyleSheet, Text, View, ActivityIndicator, FlatList, TouchableOpacity} from 'react-native';
 import Header from '../Components/Header/Header';
 import PostCard from '../Components/PostCard/PostCard';
@@ -35,7 +35,7 @@ const Dashboard = ({navigation}) => {
             return (
               <TouchableOpacity
                 onPress={() =>
-                  navigation.navigate(APP_NAV.PROFILE, {
+                  navigation.navigate(APP_NAV.USER_PROFILE, {
                     data: {first_name, last_name, profile_picture, username, ...rest},
                   })
                 }>

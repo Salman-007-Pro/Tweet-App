@@ -6,12 +6,8 @@ import {Colors} from '../Shared/theme';
 import IconEnt from 'react-native-vector-icons/Entypo';
 import PostCard from '../Components/PostCard/PostCard';
 import feedContainer from '../Containers/feedContainer';
-import {useQueryClient} from 'react-query';
-import {STORAGE_SERVICE} from '../Shared/contants/contants';
 
-const Profile = ({navigation}) => {
-  const client = useQueryClient();
-  const data = client.getQueryData(STORAGE_SERVICE.TOKEN);
+const UserProfile = ({navigation, route: {params: {data: userData = {}} = {}} = {}}) => {
   const {
     first_name,
     last_name,
@@ -23,7 +19,7 @@ const Profile = ({navigation}) => {
     profile_picture,
     id,
     ...rest
-  } = data;
+  } = userData;
   const {data: feedProvider} = feedContainer();
   const currentUserFeeds = feedProvider?.feeds?.filter(el => el.user_id == id);
   return (
@@ -80,7 +76,7 @@ const Profile = ({navigation}) => {
   );
 };
 
-export default Profile;
+export default UserProfile;
 
 const styles = StyleSheet.create({
   container: {

@@ -15,7 +15,9 @@ import {reactStorageService} from '../Shared/services/storage.service';
 import {useQueryClient} from 'react-query';
 
 const schema = Yup.object({
-  id: Yup.string().required(ERROR_MESSAGES.REQUIRED_USER_ID).max(4, ERROR_MESSAGES.INVALID_ID),
+  id: Yup.string()
+    .required(ERROR_MESSAGES.REQUIRED_EMAIL)
+    .matches(REGEX_CONSTANT.EMAIL_PATTERN, ERROR_MESSAGES.INVALID_EMAIL),
   password: Yup.string()
     .required(ERROR_MESSAGES.REQUIRED_PASSWORD)
     .matches(REGEX_CONSTANT.PASSWORD_PATTERN, ERROR_MESSAGES.INVALID_PASSWORD),
@@ -50,7 +52,7 @@ const Login = () => {
           <Text style={styles.heading}>Log In</Text>
         </View>
         <View style={styles.formContainer}>
-          <Field control={control} name="id" placeholder="User Id" />
+          <Field control={control} name="id" placeholder="Email" />
           <Field control={control} name="password" placeholder="Password" showEye />
         </View>
         <AppButton

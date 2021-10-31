@@ -1,22 +1,40 @@
 import apiService from '../Shared/services/api.service';
+import UserService from './user.service';
+
+const notFound = (message = 'user not found') => {
+  return {
+    ok: false,
+    data: null,
+    response: {
+      message: message,
+    },
+  };
+};
 
 const login = async ({id, password}) => {
-  const {data, ...rest} = await apiService.get(
-    '/v1633980023/cdn/teewt_api/user_login_data_lyukus.json',
-  );
-  const userInfo = data?.oauth?.find(el => el.user_id === id && el.password === password);
-  if (!userInfo)
+  try {
+    const [auth, users] = await Promise.all([
+      await apiService.get('/v1633980023/cdn/teewt_api/user_login_data_lyukus.json'),
+      UserService.user(),
+    ]);
+    const userEmail = users?.data?.users?.find(el => el.username === id);
+
+    if (!userEmail) return notFound();
+
+    const userInfo = auth?.data?.oauth?.find(
+      el => el.user_id === userEmail?.id && el.password === password,
+    );
+
+    if (!userInfo) return notFound();
+
     return {
-      ok: false,
-      data: null,
-      response: {
-        message: 'user not found',
-      },
+      data: userInfo,
+      ok: true,
+      response: auth.response,
     };
-  return {
-    data: userInfo,
-    ...rest,
-  };
+  } catch (error) {
+    return notFound(error?.message);
+  }
 };
 
 export default authService = {

@@ -1,14 +1,14 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {View} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Dashboard from '../Screens/Dashboard';
 import CreatePost from '../Screens/CreatePost';
 import Profile from '../Screens/Profile';
 import CustomizeTabBar from '../Components/CustomizeTabBar/CustomizeTabBar';
-import {APP_NAV, STORAGE_SERVICE} from '../Shared/contants/contants';
+import {APP_NAV} from '../Shared/contants/contants';
 import {Colors} from '../Shared/theme';
-import {useQueryClient} from 'react-query';
+import UserProfile from '../Screens/UserProfile';
 
 const RootStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -16,8 +16,6 @@ const Tab = createBottomTabNavigator();
 const CreatePlaceholder = () => <View style={{flex: 1, backgroundColor: Colors.APP_PRIMARY}} />;
 
 const AppTabScreen = () => {
-  const client = useQueryClient();
-  const data = client.getQueryData(STORAGE_SERVICE.TOKEN);
   return (
     <Tab.Navigator
       tabBar={CustomizeTabBar}
@@ -36,7 +34,7 @@ const AppTabScreen = () => {
           },
         })}
       />
-      <Tab.Screen name={APP_NAV.PROFILE} component={Profile} initialParams={{data: data}} />
+      <Tab.Screen name={APP_NAV.PROFILE} component={Profile} />
     </Tab.Navigator>
   );
 };
@@ -55,11 +53,10 @@ const AppNavigator = () => {
           presentation: 'fullScreenModal',
         }}>
         <RootStack.Screen name={APP_NAV.CREATE_MODAL} component={CreatePost} />
+        <RootStack.Screen name={APP_NAV.USER_PROFILE} component={UserProfile} />
       </RootStack.Group>
     </RootStack.Navigator>
   );
 };
 
 export default AppNavigator;
-
-const styles = StyleSheet.create({});
