@@ -59,7 +59,7 @@ const ListMap = route => {
   }
 };
 
-const CustomizeTabBar = ({state, navigation}, image) => {
+const CustomizeTabBar = ({state, navigation}) => {
   return (
     <View style={styles.container}>
       {state.routes.map((route, index) => {
@@ -73,7 +73,7 @@ const CustomizeTabBar = ({state, navigation}, image) => {
           });
 
           if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate({name: route.name, merge: true});
+            navigation.navigate({name: route.name, merge: true, params: route.params});
           }
         };
         const Component = ListMap(route.name);

@@ -6,8 +6,9 @@ import Dashboard from '../Screens/Dashboard';
 import CreatePost from '../Screens/CreatePost';
 import Profile from '../Screens/Profile';
 import CustomizeTabBar from '../Components/CustomizeTabBar/CustomizeTabBar';
-import {APP_NAV} from '../Shared/contants/contants';
+import {APP_NAV, STORAGE_SERVICE} from '../Shared/contants/contants';
 import {Colors} from '../Shared/theme';
+import {useQueryClient} from 'react-query';
 
 const RootStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -15,6 +16,8 @@ const Tab = createBottomTabNavigator();
 const CreatePlaceholder = () => <View style={{flex: 1, backgroundColor: Colors.APP_PRIMARY}} />;
 
 const AppTabScreen = () => {
+  const client = useQueryClient();
+  const data = client.getQueryData(STORAGE_SERVICE.TOKEN);
   return (
     <Tab.Navigator
       tabBar={CustomizeTabBar}
@@ -33,7 +36,7 @@ const AppTabScreen = () => {
           },
         })}
       />
-      <Tab.Screen name={APP_NAV.PROFILE} component={Profile} />
+      <Tab.Screen name={APP_NAV.PROFILE} component={Profile} initialParams={{data: data}} />
     </Tab.Navigator>
   );
 };

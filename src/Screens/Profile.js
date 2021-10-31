@@ -1,75 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
+import {StyleSheet, Text, View, FlatList} from 'react-native';
 import HeaderProfile from '../Components/Header/HeaderProfile';
 import {Metrics, Fonts} from '../Shared/metrics';
 import {Colors} from '../Shared/theme';
 import IconEnt from 'react-native-vector-icons/Entypo';
 import PostCard from '../Components/PostCard/PostCard';
 import feedContainer from '../Containers/feedContainer';
-import {STORAGE_SERVICE} from '../Shared/contants/contants';
-import {useQueryClient} from 'react-query';
 
-const Posts = [
-  {
-    name: 'Mark Samson',
-    email: '@MarkSam',
-    description:
-      " This is the best place to see what's happening in your world. Find some people and topics to follow now.",
-    likes: '3k',
-  },
-  {
-    name: 'Mark Samson',
-    email: '@MarkSam',
-    description:
-      " This is the best place to see what's happening in your world. Find some people and topics to follow now.",
-    likes: '3k',
-  },
-  {
-    name: 'Mark Samson',
-    email: '@MarkSam',
-    description:
-      " This is the best place to see what's happening in your world. Find some people and topics to follow now.",
-    likes: '3k',
-  },
-  {
-    name: 'Mark Samson',
-    email: '@MarkSam',
-    description:
-      " This is the best place to see what's happening in your world. Find some people and topics to follow now.",
-    likes: '3k',
-  },
-  {
-    name: 'Mark Samson',
-    email: '@MarkSam',
-    description:
-      " This is the best place to see what's happening in your world. Find some people and topics to follow now.",
-    likes: '3k',
-  },
-  {
-    name: 'Mark Samson',
-    email: '@MarkSam',
-    description:
-      " This is the best place to see what's happening in your world. Find some people and topics to follow now.",
-    likes: '3k',
-  },
-  {
-    name: 'Mark Samson',
-    email: '@MarkSam',
-    description:
-      " This is the best place to see what's happening in your world. Find some people and topics to follow now.",
-    likes: '3k',
-  },
-  {
-    name: 'Mark Samson',
-    email: '@MarkSam',
-    description:
-      " This is the best place to see what's happening in your world. Find some people and topics to follow now.",
-    likes: '3k',
-  },
-];
-
-const Profile = ({navigation}) => {
-  const client = useQueryClient();
+const Profile = ({navigation, route: {params: {data: userData = {}} = {}} = {}}) => {
   const {
     first_name,
     last_name,
@@ -81,7 +19,7 @@ const Profile = ({navigation}) => {
     profile_picture,
     id,
     ...rest
-  } = client.getQueryData(STORAGE_SERVICE.TOKEN);
+  } = userData;
   const {data: feedProvider} = feedContainer();
   const currentUserFeeds = feedProvider?.feeds?.filter(el => el.user_id == id);
   return (

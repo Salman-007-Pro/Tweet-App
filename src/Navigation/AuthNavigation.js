@@ -1,5 +1,4 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {APP_NAV} from '../Shared/contants/contants';
@@ -40,5 +39,3 @@ const AuthNavigation = () => {
 };
 
 export default AuthNavigation;
-
-const styles = StyleSheet.create({});

@@ -13,7 +13,6 @@ const HeaderProfile = ({onBack, image, long_bio, twitter_handle, instagram, webs
   const openModal = () => {
     modalRef.current.openModal();
   };
-  console.log('asd');
   return (
     <>
       <View style={styles.headerTopContainer}>

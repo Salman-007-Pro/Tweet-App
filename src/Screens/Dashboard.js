@@ -1,13 +1,14 @@
 import React from 'react';
-import {StyleSheet, Text, View, ActivityIndicator, FlatList} from 'react-native';
+import {StyleSheet, Text, View, ActivityIndicator, FlatList, TouchableOpacity} from 'react-native';
 import Header from '../Components/Header/Header';
 import PostCard from '../Components/PostCard/PostCard';
 import feedContainer from '../Containers/feedContainer';
 import userInfoContainer from '../Containers/userInfoContainer';
 import {Metrics, Fonts} from '../Shared/metrics';
 import {Colors} from '../Shared/theme';
+import {APP_NAV} from '../Shared/contants/contants';
 
-const Dashboard = () => {
+const Dashboard = ({navigation}) => {
   const {data: feedProvider, isLoading: feedLoader} = feedContainer();
   const {data: userProvider, isLoading: userLoader} = userInfoContainer();
   return (
@@ -29,17 +30,25 @@ const Dashboard = () => {
             </View>
           )}
           renderItem={({item, index}) => {
-            const {first_name, last_name, profile_picture, username} = userProvider?.[item.user_id];
+            const {first_name, last_name, profile_picture, username, ...rest} =
+              userProvider?.[item.user_id];
             return (
-              <PostCard
-                name={`${first_name} ${last_name}`}
-                email={username}
-                image={profile_picture}
-                {...item}
-                {...(!feedProvider?.feeds[index + 1] && {
-                  style: {borderBottomWidth: 0, marginBottom: 0},
-                })}
-              />
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate(APP_NAV.PROFILE, {
+                    data: {first_name, last_name, profile_picture, username, ...rest},
+                  })
+                }>
+                <PostCard
+                  name={`${first_name} ${last_name}`}
+                  email={username}
+                  image={profile_picture}
+                  {...item}
+                  {...(!feedProvider?.feeds[index + 1] && {
+                    style: {borderBottomWidth: 0, marginBottom: 0},
+                  })}
+                />
+              </TouchableOpacity>
             );
           }}
         />
